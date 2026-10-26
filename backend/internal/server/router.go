@@ -131,7 +131,7 @@ func registerRoutes(
 	codeseam.Register(desktop, apiKeyService, subscriptionService, func(c *gin.Context) int64 {
 		subject, _ := middleware2.GetAuthSubjectFromContext(c)
 		return subject.UserID
-	})
+	}, h.Gateway.CodeSeamResource)
 	routes.RegisterModelPlazaRoutes(v1, h, optionalJWTAuth, settingService, panelRateLimiter)
 	routes.RegisterAdminRoutes(v1, h, adminAuth, auditLog, stepUpAuth, settingService, panelRateLimiter)
 	routes.RegisterGatewayRoutes(r, h, apiKeyAuth, apiKeyService, subscriptionService, opsService, settingService, compositeResolver, cfg)

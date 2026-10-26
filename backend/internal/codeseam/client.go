@@ -3,6 +3,9 @@ package codeseam
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -26,6 +29,7 @@ type ServiceView struct {
 	Name      string     `json:"name"`
 	State     string     `json:"state"`
 	ExpiresAt *time.Time `json:"expires_at"`
+	StartsAt  *time.Time `json:"starts_at"`
 	QuotaUsed float64    `json:"quota_used"`
 	Quota     float64    `json:"quota"`
 }
@@ -48,7 +52,19 @@ func view(ctx context.Context, k *service.APIKey, subs Subscriptions) ServiceVie
 		v.State = "DISABLED"
 	default:
 		if k.Group.IsSubscriptionType() {
-			sub, err := subs.GetActiveSubscription(ctx, k.UserID, k.Group.ID)
+			if subs == nil {
+				v.State = "NOT_PROVISIONED"
+				break
+			}
+			var sub *service.UserSubscription
+			var err error
+			if fresh, ok := subs.(interface {
+				GetActiveSubscriptionFresh(context.Context, int64, int64) (*service.UserSubscription, error)
+			}); ok {
+				sub, err = fresh.GetActiveSubscriptionFresh(ctx, k.UserID, k.Group.ID)
+			} else {
+				sub, err = subs.GetActiveSubscription(ctx, k.UserID, k.Group.ID)
+			}
 			if err != nil || sub == nil {
 				v.State = "NOT_PROVISIONED"
 				break
@@ -56,7 +72,16 @@ func view(ctx context.Context, k *service.APIKey, subs Subscriptions) ServiceVie
 			if v.ExpiresAt == nil || sub.ExpiresAt.Before(*v.ExpiresAt) {
 				v.ExpiresAt = &sub.ExpiresAt
 			}
-			if !sub.IsActive() || time.Now().Before(sub.StartsAt) {
+			v.StartsAt = &sub.StartsAt
+			if sub.Status == service.SubscriptionStatusSuspended {
+				v.State = "SUSPENDED"
+				break
+			}
+			if time.Now().Before(sub.StartsAt) {
+				v.State = "NOT_STARTED"
+				break
+			}
+			if !sub.IsActive() {
 				v.State = "EXPIRED"
 				break
 			}
@@ -72,7 +97,23 @@ func view(ctx context.Context, k *service.APIKey, subs Subscriptions) ServiceVie
 
 // Register runs inside the existing authenticated, audited and rate-limited group.
 // No user/account/proxy IDs supplied by the desktop are trusted.
-func Register(r *gin.RouterGroup, keys KeyStore, subs Subscriptions, userID func(*gin.Context) int64) {
+func Register(r *gin.RouterGroup, keys KeyStore, subs Subscriptions, userID func(*gin.Context) int64, resourceResolvers ...Resources) {
+	var resources Resources
+	if len(resourceResolvers) > 0 {
+		resources = resourceResolvers[0]
+	}
+	serviceView := func(ctx context.Context, k *service.APIKey) ServiceView {
+		v := view(ctx, k, subs)
+		if v.State == "ACTIVE" && resources != nil {
+			resource, err := resources(ctx, k)
+			if err != nil {
+				v.State = err.Error()
+			} else if resource == nil {
+				v.State = "NOT_PROVISIONED"
+			}
+		}
+		return v
+	}
 	r.GET("/service/current", func(c *gin.Context) {
 		c.Header("Cache-Control", "no-store")
 		items := make([]ServiceView, 0)
@@ -90,14 +131,14 @@ func Register(r *gin.RouterGroup, keys KeyStore, subs Subscriptions, userID func
 					return
 				}
 				if k.UserID == userID(c) {
-					items = append(items, view(c.Request.Context(), k, subs))
+					items = append(items, serviceView(c.Request.Context(), k))
 				}
 			}
 			if p == nil || page >= p.Pages {
 				break
 			}
 		}
-		response.Success(c, gin.H{"services": items, "scope": "P1 authorization; upstream health checked by Gateway"})
+		response.Success(c, gin.H{"services": items, "scope": "dedicated authorization and native resources; egress requires measurement"})
 	})
 	r.POST("/client/activate", func(c *gin.Context) {
 		c.Header("Cache-Control", "no-store")
@@ -113,11 +154,54 @@ func Register(r *gin.RouterGroup, keys KeyStore, subs Subscriptions, userID func
 			response.Error(c, http.StatusNotFound, "服务不存在")
 			return
 		}
-		v := view(c.Request.Context(), k, subs)
+		v := serviceView(c.Request.Context(), k)
 		if v.State != "ACTIVE" {
 			response.ErrorWithDetails(c, http.StatusForbidden, "服务不可激活："+v.State, v.State, nil)
 			return
 		}
-		response.Success(c, gin.H{"service": v, "api_key": k.Key})
+		var revision string
+		if resources != nil {
+			r, err := resources(c.Request.Context(), k)
+			if err != nil || r == nil {
+				response.Error(c, 403, "资源已变更，请刷新")
+				return
+			}
+			revision = networkRevision(r)
+		}
+		response.Success(c, gin.H{"service": v, "api_key": k.Key, "network_revision": revision})
 	})
+	r.POST("/client/network-config", func(c *gin.Context) {
+		c.Header("Cache-Control", "no-store")
+		var req struct {
+			ServiceID int64 `json:"service_id" binding:"required,gt=0"`
+		}
+		if c.ShouldBindJSON(&req) != nil {
+			response.BadRequest(c, "请选择本人服务")
+			return
+		}
+		k, err := keys.GetByID(c.Request.Context(), req.ServiceID)
+		if err != nil || k == nil || k.UserID != userID(c) {
+			response.Error(c, 404, "服务不存在")
+			return
+		}
+		v := serviceView(c.Request.Context(), k)
+		if v.State != "ACTIVE" || resources == nil {
+			response.Error(c, 403, "服务网络配置不可领取："+v.State)
+			return
+		}
+		r, err := resources(c.Request.Context(), k)
+		if err != nil || r == nil {
+			response.Error(c, 403, "服务资源已变更，请刷新")
+			return
+		}
+		p := r.Proxy
+		response.Success(c, gin.H{"service_id": k.ID, "revision": networkRevision(r), "expected_egress": r.Binding.ExpectedEgress,
+			"expires_at": v.ExpiresAt, "proxy_expires_at": p.ExpiresAt, "proxy": gin.H{"protocol": p.Protocol, "host": p.Host, "port": p.Port, "username": p.Username, "password": p.Password},
+			"egress_verified": false, "coverage": "configuration only; process routing and leak protection require P3"})
+	})
+}
+
+func networkRevision(r *service.CodeSeamResource) string {
+	b, _ := json.Marshal([]any{r.Binding, r.Proxy, r.Account.UpdatedAt})
+	return fmt.Sprintf("%x", sha256.Sum256(b))
 }
