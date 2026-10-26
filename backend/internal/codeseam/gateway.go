@@ -55,9 +55,15 @@ func GatewayGuard(keys KeyStore, subs Subscriptions, resources Resources) gin.Ha
 		}
 		// P2 only supports native Anthropic endpoints, never alternative dispatch.
 		path := strings.TrimSuffix(c.Request.URL.Path, "/")
+		for _, prefix := range []string{"/api/v3", "/v3", "/v1"} {
+			if strings.HasPrefix(path, prefix) {
+				path = strings.TrimPrefix(path, prefix)
+				break
+			}
+		}
 		switch {
-		case path == "/v1/messages", path == "/messages", path == "/v1/messages/count_tokens", path == "/messages/count_tokens", path == "/v1/models", path == "/models", path == "/v1/usage", path == "/v1/sub2api/billing":
-		case strings.HasPrefix(path, "/v1/models/"), strings.HasPrefix(path, "/models/"):
+		case path == "/messages", path == "/messages/count_tokens", path == "/models", path == "/usage", path == "/sub2api/billing":
+		case strings.HasPrefix(path, "/models/"):
 		default:
 			denyRoute(c, "DEDICATED_ENDPOINT_UNSUPPORTED")
 			return
