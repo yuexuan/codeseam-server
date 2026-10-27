@@ -1,0 +1,20 @@
+{
+  "client": {
+    "repository": "https://github.com/yuexuan/codeseam-client",
+    "branch": "dev",
+    "code_commit": "899c40d4335ef98c8bc96e52cc6f70ac975ba2e7",
+    "pushed": true,
+    "preserved_existing_p3_commit": "0b7af91"
+  },
+  "server": {
+    "repository": "https://github.com/yuexuan/codeseam-server",
+    "branch": "dev",
+    "base_commit": "87d376a8b",
+    "code_and_evidence_commit": "01782f98f137675de11eb0192bf574d4e449f0cf",
+    "pushed": true,
+    "unrelated_untracked_migrations_preserved": true
+  },
+  "installer_sha256": "5AA09931468B09FBF9D4A37F578F4113E7493BFE10D179C54BC1B295B124B8B5",
+  "p5_status": "非 PASS",
+  "note": "This metadata is a follow-up documentation commit; the code/evidence commits above were already pushed successfully. No main/upstream/parent repository changes were committed."
+}
