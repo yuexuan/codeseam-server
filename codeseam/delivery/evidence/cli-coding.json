@@ -1,0 +1,22 @@
+{
+  "native_cli": true,
+  "node_available_to_cli": false,
+  "result": "P5_CODE_WRITTEN",
+  "is_error": false,
+  "num_turns": 2,
+  "tool_calls": [
+    {
+      "name": "Write",
+      "id": "call_00_X3aJjFBAONyd76LWjU2I2333"
+    }
+  ],
+  "tool_results": [
+    {
+      "tool_use_id": "call_00_X3aJjFBAONyd76LWjU2I2333",
+      "is_error": false
+    }
+  ],
+  "generated_code": "export function sum(a, b) { return a + b; }",
+  "sum_2_3": 5,
+  "verification_runtime": "separate QA harness; Node was absent from client and native CLI PATH"
+}

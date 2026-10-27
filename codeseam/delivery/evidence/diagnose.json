@@ -1,0 +1,94 @@
+{
+  "captured_at": "2026-10-26T12:20:08.319Z",
+  "action": "diagnose",
+  "ok": true,
+  "value": {
+    "generatedAt": 1793017208,
+    "checks": [
+      {
+        "id": "proxy",
+        "label": "受管代理",
+        "status": "pass",
+        "detail": "已创建不使用环境代理的受管 HTTP 客户端",
+        "evidence": null,
+        "protected": true,
+        "remediation": null
+      },
+      {
+        "id": "egress_ipv4",
+        "label": "IPv4 出口",
+        "status": "pass",
+        "detail": "Real shared-host egress matched QA binding (not dedicated public proxy evidence)",
+        "evidence": "[redacted shared host egress]",
+        "protected": true,
+        "remediation": null
+      },
+      {
+        "id": "egress_ipv6",
+        "label": "IPv6 出口",
+        "status": "unknown",
+        "detail": "IPv6 出口探针未完成：请求失败：error sending request for url (https://api6.ipify.org/)；未据此宣称安全",
+        "evidence": null,
+        "protected": true,
+        "remediation": null
+      },
+      {
+        "id": "dns",
+        "label": "DNS 路径",
+        "status": "unknown",
+        "detail": "本机解析到服务地址，但 HTTP 代理的远端解析不可观测；不能把本机结果当作无泄漏证明",
+        "evidence": "本机观察到 127.0.0.1:443",
+        "protected": true,
+        "remediation": null
+      },
+      {
+        "id": "udp",
+        "label": "UDP 路由",
+        "status": "unknown",
+        "detail": "UDP 探针超时；未把超时当作安全证明",
+        "evidence": null,
+        "protected": false,
+        "remediation": null
+      },
+      {
+        "id": "kill_switch",
+        "label": "Kill-Switch",
+        "status": "pass",
+        "detail": "本地代理端口可连接；停止它后 localhost 请求将失败，不存在直连回退",
+        "evidence": "127.0.0.1:18899",
+        "protected": true,
+        "remediation": null
+      },
+      {
+        "id": "config",
+        "label": "受管配置",
+        "status": "pass",
+        "detail": "Claude Code 的 localhost 地址和占位授权与当前端口一致",
+        "evidence": null,
+        "protected": true,
+        "remediation": null
+      },
+      {
+        "id": "webrtc",
+        "label": "WebRTC / STUN",
+        "status": "not_applicable",
+        "detail": "当前受管表面是 Claude Code CLI，没有浏览器 WebRTC API；未伪造 STUN 结果",
+        "evidence": null,
+        "protected": false,
+        "remediation": "浏览器/Electron 场景接入后再做 STUN 候选验证"
+      },
+      {
+        "id": "non_api",
+        "label": "Claude Code 非 API 流量",
+        "status": "warning",
+        "detail": "当前只把 API 请求锁定到 localhost；Claude Code 其他联网进程路径没有 Windows WFP/TUN 证据，按未覆盖处理",
+        "evidence": "受管启动会注入 HTTP(S)_PROXY/ALL_PROXY；尚无 Windows WFP/TUN 规则证明进程所有连接 fail-closed",
+        "protected": false,
+        "remediation": "需要覆盖非 API 流量时，接入经实测的 Windows 网络规则/受控隧道后再升级状态"
+      }
+    ],
+    "canStart": true,
+    "apiProtection": "unknown",
+    "nonApiCoverage": "not_covered"
+  }
+}

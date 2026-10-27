@@ -1,0 +1,30 @@
+
+> z-switch@0.5.0 tauri
+> tauri build --bundles nsis
+
+        Info Looking up installed tauri packages to check mismatched versions...
+     Running beforeBuildCommand `npm run build`
+
+> z-switch@0.5.0 build
+> tsc && vite build
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 32 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                           0.50 kB │ gzip:  0.33 kB
+dist/assets/codeseam-logo-D9LJPPaB.svg    0.92 kB │ gzip:  0.44 kB
+dist/assets/index-BfTeTYLv.css            5.48 kB │ gzip:  1.86 kB
+dist/assets/index-D5MTJPRG.js           205.19 kB │ gzip: 65.18 kB
+✓ built in 758ms
+   Compiling z-switch v0.5.0 (G:\Project\CodeSeam\codeseam-client\src-tauri)
+    Finished `release` profile [optimized] target(s) in 45.33s
+       Built application at: G:\Project\CodeSeam\codeseam-client\src-tauri\target\release\z-switch.exe
+        Info Patching G:\Project\CodeSeam\codeseam-client\src-tauri\target\release\z-switch.exe with bundle type information: nsis
+        Info Target: x64
+     Running makensis to produce G:\Project\CodeSeam\codeseam-client\src-tauri\target\release\bundle\nsis\CodeSeam_0.5.0_x64-setup.exe
+    Finished 1 bundle at:
+        G:\Project\CodeSeam\codeseam-client\src-tauri\target\release\bundle\nsis\CodeSeam_0.5.0_x64-setup.exe
+
+Windows installer: G:\Project\CodeSeam\codeseam-client\release\CodeSeam_0.5.0_x64-setup.exe

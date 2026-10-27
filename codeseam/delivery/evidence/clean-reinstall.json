@@ -1,0 +1,18 @@
+{
+  "captured_at": "2026-10-26T12:30:35.298Z",
+  "action": "status",
+  "ok": true,
+  "value": {
+    "logged_in": false,
+    "server": null,
+    "services": [],
+    "service_id": null,
+    "proxy_running": false,
+    "local_url": "http://127.0.0.1:18899/claude",
+    "network": null,
+    "configured": false,
+    "cli": "G:\\Project\\CodeSeam\\codeseam-client\\.local\\cli\\node_modules\\.bin\\claude.cmd",
+    "cli_pid": null,
+    "requests": 0
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "captured_at": "2026-10-26T12:23:01.886Z",
+  "action": "status",
+  "ok": true,
+  "value": {
+    "logged_in": true,
+    "server": "http://127.0.0.1:18081",
+    "services": [
+      {
+        "id": 2,
+        "name": "CodeSeam Dedicated P2 A",
+        "state": "ACTIVE",
+        "expires_at": "2026-11-27T15:17:37.239614+08:00",
+        "starts_at": "2026-10-26T15:17:37.239614+08:00",
+        "quota_used": 0.0895755,
+        "quota": 1
+      }
+    ],
+    "service_id": 2,
+    "proxy_running": false,
+    "local_url": "http://127.0.0.1:18899/claude",
+    "network": null,
+    "configured": true,
+    "cli": "G:\\Project\\CodeSeam\\codeseam-client\\.local\\cli\\node_modules\\.bin\\claude.cmd",
+    "cli_pid": null,
+    "requests": 0
+  }
+}

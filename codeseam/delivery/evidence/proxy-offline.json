@@ -1,0 +1,12 @@
+{
+  "captured_at": "2026-10-26T12:22:57.107Z",
+  "http": 502,
+  "content_type": "application/json; charset=utf-8",
+  "request_id": "24ef8aea-6640-4751-9ac4-144f98956ceb",
+  "chunks": 1,
+  "first_chunk_ms": 136,
+  "total_ms": 137,
+  "events": [],
+  "text": "",
+  "complete": false
+}

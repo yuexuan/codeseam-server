@@ -1,0 +1,20 @@
+{
+  "captured_at": "2026-10-27T02:49:23.113Z",
+  "http": 200,
+  "content_type": "text/event-stream",
+  "request_id": "72fbbe11-aeb6-4a7d-9073-9a0891a37317",
+  "chunks": 6,
+  "first_chunk_ms": 11361,
+  "total_ms": 11961,
+  "events": [
+    "message_start",
+    "content_block_start",
+    "ping",
+    "content_block_delta",
+    "content_block_stop",
+    "message_delta",
+    "message_stop"
+  ],
+  "text": "CODESEAM_P5_INSTALLED_OK",
+  "complete": true
+}

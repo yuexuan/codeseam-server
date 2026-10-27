@@ -1,0 +1,6 @@
+{
+  "captured_at": "2026-10-26T12:23:01.403Z",
+  "action": "launch",
+  "ok": false,
+  "error": "网络诊断存在会导致受保护 API 直连的失败项；已保持 Kill-Switch 拒绝状态，请先修复并重新检测"
+}

@@ -1,0 +1,26 @@
+{
+  "captured_at": "2026-10-26T12:20:08.415Z",
+  "action": "usage",
+  "ok": true,
+  "value": {
+    "total_requests": 6,
+    "total_input_tokens": 20851,
+    "total_output_tokens": 67,
+    "total_cache_tokens": 0,
+    "total_cache_creation_tokens": 0,
+    "total_cache_read_tokens": 0,
+    "total_tokens": 20918,
+    "total_cost": 0.0633627,
+    "total_actual_cost": 0.0633627,
+    "average_duration_ms": 2653.6666666666665,
+    "endpoints": [
+      {
+        "endpoint": "/v1/messages",
+        "requests": 6,
+        "total_tokens": 20918,
+        "cost": 0.0633627,
+        "actual_cost": 0.0633627
+      }
+    ]
+  }
+}

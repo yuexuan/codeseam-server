@@ -1,0 +1,26 @@
+{
+  "result": "P5_TOOL_PROOF_62F9B1",
+  "is_error": false,
+  "num_turns": 2,
+  "terminal_reason": "completed",
+  "tool_calls": [
+    {
+      "name": "Read",
+      "id": "call_00_ET_3HbSENUaIRcu8W2M4RKC6501"
+    }
+  ],
+  "tool_results": [
+    {
+      "tool_use_id": "call_00_ET_3HbSENUaIRcu8W2M4RKC6501",
+      "is_error": false
+    }
+  ],
+  "stream_events": [
+    "message_start",
+    "content_block_start",
+    "content_block_delta",
+    "content_block_stop",
+    "message_delta",
+    "message_stop"
+  ]
+}

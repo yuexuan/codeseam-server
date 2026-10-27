@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import logo from './assets/codeseam-logo.svg'
 import * as client from './api'
 import type { Service, TrendPoint, UsageStats, User } from './api'
 
@@ -73,7 +74,7 @@ onMounted(refreshData)
 <template>
   <div class="app-shell">
     <header class="topbar">
-      <a class="brand" href="#" @click.prevent="selectPage('service')"><span class="brand-mark">C</span><span>CodeSeam</span></a>
+      <a class="brand" href="#" @click.prevent="selectPage('service')"><img class="brand-mark" :src="logo" alt="CodeSeam" /><span>CodeSeam</span></a>
       <div v-if="user" class="top-actions"><span class="user-email">{{ user.email || user.username }}</span><button class="ghost-button" @click="signOut">退出</button></div>
     </header>
 

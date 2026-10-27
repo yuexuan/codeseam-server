@@ -1,0 +1,21 @@
+{
+  "time": "2026-10-26T12:19:08.795Z",
+  "http": 200,
+  "content_type": "text/event-stream",
+  "request_id": "73d48ea5-972c-4c23-a57d-523709b3f7aa",
+  "chunks": 7,
+  "first_chunk_ms": 317,
+  "total_ms": 635,
+  "upstream_model": "deepseek-flash",
+  "events": [
+    "message_start",
+    "content_block_start",
+    "ping",
+    "content_block_delta",
+    "content_block_stop",
+    "message_delta",
+    "message_stop"
+  ],
+  "text": "CODESEAM_INCREMENTAL_SSE_OK",
+  "complete": true
+}

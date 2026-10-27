@@ -1,0 +1,12 @@
+{
+  "captured_at": "2026-10-26T12:22:39.905Z",
+  "http": 502,
+  "content_type": "text/plain; charset=utf-8",
+  "request_id": null,
+  "chunks": 1,
+  "first_chunk_ms": 2061,
+  "total_ms": 2061,
+  "events": [],
+  "text": "",
+  "complete": false
+}

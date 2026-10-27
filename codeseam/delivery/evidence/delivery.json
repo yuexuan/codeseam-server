@@ -1,0 +1,103 @@
+{
+  "captured_at": "2026-10-27T02:50:51.505Z",
+  "checks": [
+    {
+      "name": "Go serves production Portal",
+      "pass": true
+    },
+    {
+      "name": "production asset /portal/assets/index-Yba3k6_D.js",
+      "pass": true
+    },
+    {
+      "name": "production asset /portal/assets/index-BWWvI4xn.css",
+      "pass": true
+    },
+    {
+      "name": "Portal download matches installer",
+      "pass": true,
+      "sha256": "5aa09931468b09fbf9d4a37f578f4113e7493bfe10d179c54bc1b295b124b8b5",
+      "bytes": 4986266
+    },
+    {
+      "name": "unauthenticated service remains denied",
+      "pass": true
+    },
+    {
+      "name": "desktop and Portal API usage agree",
+      "pass": true,
+      "date_range": [
+        "2026-10-26",
+        "2026-10-27"
+      ],
+      "desktop": {
+        "total_requests": 18,
+        "total_input_tokens": 35365,
+        "total_output_tokens": 631,
+        "total_cache_tokens": 14080,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 14080,
+        "total_tokens": 50076,
+        "total_cost": 0.1195887,
+        "total_actual_cost": 0.1195887,
+        "average_duration_ms": 2075.3333333333335,
+        "endpoints": [
+          {
+            "endpoint": "/v1/messages",
+            "requests": 18,
+            "total_tokens": 50076,
+            "cost": 0.1195887,
+            "actual_cost": 0.1195887
+          }
+        ]
+      },
+      "portal_api": {
+        "total_requests": 18,
+        "total_input_tokens": 35365,
+        "total_output_tokens": 631,
+        "total_cache_tokens": 14080,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 14080,
+        "total_tokens": 50076,
+        "total_cost": 0.1195887,
+        "total_actual_cost": 0.1195887,
+        "average_duration_ms": 2075.3333333333335,
+        "endpoints": [
+          {
+            "endpoint": "/v1/messages",
+            "requests": 18,
+            "total_tokens": 50076,
+            "cost": 0.1195887,
+            "actual_cost": 0.1195887
+          }
+        ]
+      }
+    },
+    {
+      "name": "same active service and expiry",
+      "pass": true,
+      "services": [
+        {
+          "id": 2,
+          "name": "CodeSeam Dedicated P2 A",
+          "state": "ACTIVE",
+          "expires_at": "2026-11-27T15:17:37.239614+08:00",
+          "starts_at": "2026-10-26T15:17:37.239614+08:00",
+          "quota_used": 0.1195887,
+          "quota": 1
+        }
+      ]
+    },
+    {
+      "name": "revoked service denies activation and installed proxy request",
+      "pass": true,
+      "activation_http": 403,
+      "gateway_http": 403,
+      "service_state": "NOT_PROVISIONED"
+    },
+    {
+      "name": "service restored",
+      "pass": true
+    }
+  ]
+}

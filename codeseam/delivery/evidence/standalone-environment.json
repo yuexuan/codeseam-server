@@ -1,0 +1,17 @@
+{
+  "client_pid": 7308,
+  "installed_executable": "C:\\Users\\Administrator\\AppData\\Local/CodeSeam/z-switch.exe",
+  "working_directory": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp",
+  "path": "C:\\WINDOWS/System32;C:\\WINDOWS;C:\\WINDOWS/System32/WindowsPowerShell/v1.0;G:/Project/CodeSeam/codeseam-client/.local/cli/node_modules/@anthropic-ai/claude-code/bin",
+  "node_absent": true,
+  "cargo_absent": true,
+  "vite_absent": true,
+  "installed_binary_sha256": "803C52969C6C6C621886072FEA675DB1E2E55EE4DD8CECECBE6A7DB16412BBB0",
+  "release_binary_sha256": "227AC04592E79E9CB39365DE47D6FBB4E784B88AE092CD6CEDAA231856632208",
+  "binary_difference_bytes": 3,
+  "bundle_marker": {
+    "release": "UNK",
+    "installed": "NSS"
+  },
+  "binary_matches_except_nsis_marker": true
+}

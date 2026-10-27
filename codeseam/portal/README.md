@@ -12,6 +12,8 @@ pnpm build
 
 默认请求同源 `/api/v1`。部署到独立域名时可通过 `VITE_API_BASE_URL` 指向服务端 API。Windows 安装包地址通过 `VITE_WINDOWS_DOWNLOAD_URL` 配置；未配置时页面明确显示“暂未发布”，不会生成虚假链接。
 
+P5 生产路径为 `/portal/`。可由现有 Go 主服务直接提供静态文件与安装包，无需 Vite 常驻。构建、部署路径和真实验收入口见 `../deploy/DELIVERY.md`。Logo 与客户端使用相同的正式 SVG。
+
 ## 复用的真实接口
 
 - `POST /auth/login`、`POST /auth/register`、`POST /auth/refresh`、`POST /auth/logout`

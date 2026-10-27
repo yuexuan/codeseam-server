@@ -29,6 +29,9 @@ $env:DATABASE_HOST='127.0.0.1';$env:DATABASE_PORT='15432';$env:DATABASE_USER='co
 $env:REDIS_HOST='127.0.0.1';$env:REDIS_PORT='16379'
 $env:ADMIN_EMAIL=$secret.admin_email;$env:ADMIN_PASSWORD=$secret.admin_password;$env:JWT_SECRET=$secret.jwt_secret
 $env:SERVER_HOST='127.0.0.1';$env:SERVER_PORT='18081';$env:SERVER_MODE='release';$env:RUN_MODE='standard';$env:TZ='Asia/Shanghai'
+$env:CODESEAM_PORTAL_DIR=Join-Path $repo 'codeseam/portal/dist'
+$installer=Join-Path $PSScriptRoot 'dist/CodeSeam-windows-x64-setup.exe'
+if (Test-Path -LiteralPath $installer) {$env:CODESEAM_WINDOWS_INSTALLER=$installer}
 $existing=Get-NetTCPConnection -State Listen -LocalPort 18081 -ErrorAction SilentlyContinue
 if ($existing) {throw '18081 already listening; inspect existing process before restart'}
 $stamp=Get-Date -Format 'yyyyMMdd-HHmmss'

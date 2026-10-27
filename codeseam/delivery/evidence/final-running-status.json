@@ -1,0 +1,35 @@
+{
+  "captured_at": "2026-10-27T02:50:52.187Z",
+  "action": "status",
+  "ok": true,
+  "value": {
+    "logged_in": true,
+    "server": "http://127.0.0.1:18081",
+    "services": [
+      {
+        "id": 2,
+        "name": "CodeSeam Dedicated P2 A",
+        "state": "ACTIVE",
+        "expires_at": "2026-11-27T15:17:37.239614+08:00",
+        "starts_at": "2026-10-26T15:17:37.239614+08:00",
+        "quota_used": 0.0908715,
+        "quota": 1
+      }
+    ],
+    "service_id": 2,
+    "proxy_running": true,
+    "local_url": "http://127.0.0.1:18899/claude",
+    "network": {
+      "revision": "cedc1a4b37f59fdd6c84e326c6021ee94f9611036f6248267302b830f2008b93",
+      "expected_egress": "[redacted shared host egress]",
+      "expires_at": "2026-11-27T15:17:37.239614+08:00",
+      "proxy_expires_at": null,
+      "protocol": "http",
+      "egress_verified": false
+    },
+    "configured": true,
+    "cli": "G:\\Project\\CodeSeam\\codeseam-client\\.local\\cli\\node_modules\\@anthropic-ai\\claude-code\\bin\\claude.exe",
+    "cli_pid": 92296,
+    "requests": 5
+  }
+}

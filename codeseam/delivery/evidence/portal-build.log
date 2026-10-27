@@ -1,0 +1,14 @@
+
+> codeseam-portal@0.1.0 build
+> vue-tsc --noEmit && vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 68 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.42 kB │ gzip:  0.32 kB
+dist/assets/index-BWWvI4xn.css    8.49 kB │ gzip:  2.57 kB
+dist/assets/index-Yba3k6_D.js   134.42 kB │ gzip: 52.07 kB
+✓ built in 662ms
+Portal and installer prepared. Set CODESEAM_PORTAL_DIR and CODESEAM_WINDOWS_INSTALLER on the existing Go service.
