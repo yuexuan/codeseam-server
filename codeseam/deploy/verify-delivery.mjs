@@ -10,8 +10,9 @@ const evidence={captured_at:new Date().toISOString(),checks:[]};
 function check(name,ok,details={}){evidence.checks.push({name,pass:!!ok,...details});if(!ok)throw Error(name);}
 async function api(method,path,body,token,allowed=false){const r=await fetch(base+'/api/v1'+path,{method,headers:{'content-type':'application/json',...(token?{authorization:`Bearer ${token}`}:{})},body:body?JSON.stringify(body):undefined});const v=await r.json();if(allowed)return {http:r.status,data:v.data};if(!r.ok||v.code!==0)throw Error(`HTTP ${r.status} ${path}`);return v.data;}
 try{
- const r=await fetch(base+'/portal/');const html=await r.text();check('Go serves production Portal',r.status===200&&html.includes('/portal/assets/')&&!html.includes('/src/'));
- for(const asset of [...html.matchAll(/(?:src|href)="(\/portal\/assets\/[^\"]+)"/g)].map(m=>m[1]))check('production asset '+asset,(await fetch(base+asset)).status===200);
+ const r=await fetch(base+'/');const html=await r.text();check('Go serves production homepage',r.status===200&&html.includes('/assets/')&&!html.includes('/src/'));
+ for(const path of ['/login','/register','/app','/app/usage'])check('Path route '+path,(await fetch(base+path)).status===200);
+ for(const asset of [...html.matchAll(/(?:src|href)="(\/assets\/[^\"]+)"/g)].map(m=>m[1]))check('production asset '+asset,(await fetch(base+asset)).status===200);
  const setup=await fetch(base+'/downloads/codeseam-windows.exe');const data=Buffer.from(await setup.arrayBuffer());const hash=crypto.createHash('sha256').update(data).digest('hex');
  const file=await fs.readFile(new URL('dist/CodeSeam-windows-x64-setup.exe',here));check('Portal download matches installer',setup.status===200&&hash===crypto.createHash('sha256').update(file).digest('hex'),{sha256:hash,bytes:data.length});
  check('unauthenticated service remains denied',(await api('GET','/codeseam/service/current',null,null,true)).http===401);

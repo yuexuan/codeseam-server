@@ -21,7 +21,7 @@ function saveAuth(data: AuthResponse) {
   if (data.user) localStorage.setItem('auth_user', JSON.stringify(data.user))
 }
 export function clearAuth() { ['auth_token', 'refresh_token', 'token_expires_at', 'auth_user'].forEach((key) => localStorage.removeItem(key)) }
-export function hasAuth() { return Boolean(localStorage.getItem('auth_token')) }
+export function hasAuth() { return Boolean(localStorage.getItem('auth_token') || localStorage.getItem('refresh_token')) }
 
 function unwrap<T>(value: unknown): T {
   const body = value as { code?: number; data?: T; message?: string }
@@ -40,7 +40,7 @@ api.interceptors.request.use((config) => {
 })
 api.interceptors.response.use((response) => { response.data = unwrap(response.data); return response }, async (error: AxiosError) => {
   const config = error.config as (InternalAxiosRequestConfig & { _retry?: boolean }) | undefined
-  if (error.response?.status === 401 && config && !config._retry && localStorage.getItem('refresh_token') && !String(config.url).includes('/auth/')) {
+  if (error.response?.status === 401 && config && !config._retry && localStorage.getItem('refresh_token') && !['/auth/login', '/auth/register', '/auth/refresh', '/auth/logout'].some((path) => String(config.url).includes(path))) {
     config._retry = true
     refreshing ||= (async () => {
       const refreshToken = localStorage.getItem('refresh_token')

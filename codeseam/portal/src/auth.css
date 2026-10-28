@@ -1,0 +1,174 @@
+/* ReClaude-inspired centered authentication layout, using the CodeSeam brand.
+   Scoped to logged-out account views; no changes to the signed-in workspace. */
+.cs-auth-root {
+  --cs-auth-accent: #b66c2d;
+  --cs-auth-accent-hover: #a45c22;
+  --cs-auth-page: #fdfcfa;
+  --cs-auth-card: #ffffff;
+  --cs-auth-text: #252931;
+  --cs-auth-muted: #77808c;
+  --cs-auth-border: #dededc;
+  --cs-auth-input: #ffffff;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 52% 45% at 15% 11%, rgba(217, 148, 111, .13), transparent 80%),
+    radial-gradient(ellipse 55% 48% at 81% 93%, rgba(213, 150, 114, .11), transparent 80%),
+    var(--cs-auth-page);
+  color: var(--cs-auth-text);
+}
+:root[data-theme="dark"] .cs-auth-root {
+  --cs-auth-accent: #d9a16d;
+  --cs-auth-accent-hover: #e9b581;
+  --cs-auth-page: #211f1e;
+  --cs-auth-card: #2b2927;
+  --cs-auth-text: #f2ece6;
+  --cs-auth-muted: #aaa39b;
+  --cs-auth-border: #5c544e;
+  --cs-auth-input: #302d2a;
+  background:
+    radial-gradient(ellipse 52% 45% at 15% 11%, rgba(166, 97, 53, .13), transparent 80%),
+    radial-gradient(ellipse 55% 48% at 81% 93%, rgba(155, 85, 48, .12), transparent 80%),
+    var(--cs-auth-page);
+}
+.cs-auth-topbar {
+  height: 70px;
+  padding: 17px 24px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: transparent;
+}
+.cs-auth-home { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
+.cs-auth-home img { display: block; width: 39px; height: 39px; object-fit: contain; }
+.cs-auth-docs {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--cs-auth-text);
+}
+.cs-auth-docs:hover { color: var(--cs-auth-accent); }
+.cs-auth-shell {
+  min-height: calc(100vh - 70px);
+  min-height: calc(100dvh - 70px);
+  padding: 36px 20px 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cs-auth-card {
+  width: 392px;
+  max-width: 100%;
+  padding: 44px 23px 36px;
+  border-radius: 14px;
+  background: var(--cs-auth-card);
+  text-align: center;
+  box-shadow: 0 16px 50px rgba(105, 74, 55, .025);
+}
+.cs-auth-mark { display: block; height: 46px; width: 46px; object-fit: contain; margin: 0 auto 29px; }
+.cs-auth-card h1 {
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1.45;
+  letter-spacing: -.02em;
+  margin: 0 0 10px;
+}
+.cs-auth-subtitle { margin: 0 0 37px; color: var(--cs-auth-muted); font-size: 12px; line-height: 1.7; }
+.cs-auth-form { display: grid; gap: 18px; text-align: left; }
+.cs-auth-field { display: block; position: relative; text-align: left; }
+.cs-auth-field-label {
+  position: absolute;
+  left: 11px;
+  top: -9px;
+  z-index: 1;
+  padding: 0 5px;
+  color: var(--cs-auth-muted);
+  background: var(--cs-auth-card);
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: 600;
+}
+.cs-auth-field input {
+  display: block;
+  width: 100%;
+  height: 52px;
+  padding: 0 14px;
+  border-radius: 6px;
+  border: 1px solid var(--cs-auth-border);
+  color: var(--cs-auth-text);
+  background: var(--cs-auth-input);
+  font-size: 13px;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.cs-auth-field input::placeholder { color: var(--cs-auth-muted); opacity: .7; }
+.cs-auth-field input:focus { border-color: var(--cs-auth-accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--cs-auth-accent) 13%, transparent); }
+.cs-auth-field input:-webkit-autofill,
+.cs-auth-field input:-webkit-autofill:hover,
+.cs-auth-field input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 100px var(--cs-auth-input) inset;
+  -webkit-text-fill-color: var(--cs-auth-text);
+}
+.cs-auth-password-field input { padding-right: 51px; }
+.cs-auth-eye {
+  position: absolute;
+  z-index: 1;
+  top: 1px;
+  right: 1px;
+  width: 44px;
+  height: 50px;
+  background: transparent;
+  color: var(--cs-auth-muted);
+  border: 0;
+  border-left: 1px solid var(--cs-auth-border);
+  border-radius: 0 5px 5px 0;
+  display: grid;
+  place-items: center;
+}
+.cs-auth-eye:hover { color: var(--cs-auth-accent); }
+.cs-auth-eye svg { width: 17px; height: 17px; }
+.cs-auth-forgot-row { min-height: 18px; display: flex; justify-content: flex-end; align-items: center; margin-top: -2px; }
+.cs-auth-forgot-row a, .cs-auth-bottom a { color: var(--cs-auth-accent); font-weight: 700; }
+.cs-auth-forgot-row a { font-size: 12px; }
+.cs-auth-forgot-row a:hover, .cs-auth-bottom a:hover { color: var(--cs-auth-accent-hover); text-decoration: underline; }
+.cs-auth-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 100%;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--cs-auth-accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 750;
+  transition: background-color .2s;
+}
+.cs-auth-submit:not(:disabled):hover { background: var(--cs-auth-accent-hover); }
+.cs-auth-submit:disabled { opacity: .55; }
+:root[data-theme="dark"] .cs-auth-submit { color: #20150d; }
+.cs-auth-bottom { margin-top: 23px; font-size: 12px; color: var(--cs-auth-text); }
+.cs-auth-bottom a { margin-left: 6px; }
+.cs-auth-message { margin: -4px 0 0; font-size: 12px; line-height: 1.6; border-radius: 6px; padding: 9px 11px; }
+.cs-auth-message-error { background: var(--red-soft); color: var(--red); }
+.cs-auth-message-success { background: var(--green-soft); color: var(--green); }
+.cs-auth-register .cs-auth-subtitle,
+.cs-auth-forgot .cs-auth-subtitle { margin-bottom: 32px; }
+.cs-auth-root .cs-auth-home:focus-visible,
+.cs-auth-root .cs-auth-docs:focus-visible,
+.cs-auth-root .cs-auth-bottom a:focus-visible,
+.cs-auth-root .cs-auth-forgot-row a:focus-visible,
+.cs-auth-root .cs-auth-eye:focus-visible,
+.cs-auth-root .cs-auth-submit:focus-visible { outline: 2px solid var(--cs-auth-accent); outline-offset: 3px; }
+@media(max-width: 560px) {
+  .cs-auth-topbar { padding: 12px 18px 0; height: 60px; }
+  .cs-auth-home, .cs-auth-home img { width: 35px; height: 35px; }
+  .cs-auth-shell { min-height: calc(100dvh - 60px); padding: 24px 18px 72px; }
+  .cs-auth-card { padding: 39px 21px 35px; }
+  .cs-auth-field input { font-size: 16px; }
+}
+@media(max-height: 680px) and (min-width: 561px) {
+  .cs-auth-shell { padding: 24px 20px 50px; }
+}
